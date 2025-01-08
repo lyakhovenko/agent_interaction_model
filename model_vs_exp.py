@@ -19,10 +19,10 @@ for _ in range(500):
 
 # Строим график
 plt.figure(figsize=(12, 6))
-plt.plot(results_program1, label="Без использования модели")
-plt.plot(results_program2, label="С использованием разработанной моделью")
-plt.xlabel("Номер эксперимента")
-plt.ylabel("Объем полученой информации")
-plt.title("График значений объема полученной информации группой агентов")
+plt.plot(results_program1, label="Without using the developed model")
+plt.plot(results_program2, label="Using the developed model")
+plt.xlabel("Experiment number")
+plt.ylabel("The volume of information received by a group of agents")
+plt.title("Graph of the values ​​of the volume of information received by a group of agents")
 plt.legend()
 plt.show()
