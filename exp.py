@@ -2,9 +2,9 @@ import numpy as np
 import random
 
 
-# Создаем карту в виде матрицы 10x10
+# Create a map in the form of a matrix 40x40
 def run():
-    map_size = 20
+    map_size = 40
     map_matrix = np.zeros((map_size, map_size))
 
     # Инициализируем агентов
@@ -18,7 +18,7 @@ def run():
         }
         agents.append(agent)
 
-    # Функция для движения агента по карте
+    # Function for agent movement on the map
     def move_agent(agent, move_direction):
         new_x, new_y = agent["x"], agent["y"]
 
@@ -33,32 +33,32 @@ def run():
 
         return new_x, new_y
 
-    # Имитация прохода агентов по карте
+    # Simulation of agents' passage on the map
     for agent in agents:
-        visited_positions = set()  # для отслеживания посещенных позиций
+        visited_positions = set()  # to track visited positions
         moves = ["вверх", "вниз", "влево", "вправо"]
 
-        for _ in range(20):  # делаем 20 шагов для каждого агента
+        for _ in range(20):  # do 20 steps for each agent
             move_direction = random.choice(moves)
             new_x, new_y = move_agent(agent, move_direction)
 
             if (
                 new_x,
                 new_y,
-            ) not in visited_positions:  # проверяем, что позиция не была посещена
+            ) not in visited_positions:  # check that the position has not been visited
                 agent["x"], agent["y"] = new_x, new_y
-                agent["r"] -= 1  # уменьшаем ресурсы
-                agent["inf"] += 1  # увеличиваем количество информации
+                agent["r"] -= 1  # reduce resources
+                agent["inf"] += 1  # increasing the amount of information
 
                 visited_positions.add((new_x, new_y))
             else:
                 agent["x"], agent["y"] = new_x, new_y
-                agent["r"] -= 1  # уменьшаем ресурсы
+                agent["r"] -= 1  # reduce resources
 
                 visited_positions.add((new_x, new_y))
 
-    # Выводим информацию об агентах
-    # Выводим информацию об агентах и сумму ресурсов и информации всех агентов
+    # Displaying information about agents
+    # Output information about agents and the sum of resources and information of all agents
     resources_sum = 0
     information_sum = 0
 
