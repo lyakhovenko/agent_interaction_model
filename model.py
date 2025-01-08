@@ -2,12 +2,12 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-# Создаем карту в виде матрицы 10x10
+# Create a map in the form of a matrix 40x40
 def run():
-    map_size = 20
+    map_size = 40
     map_matrix = np.zeros((map_size, map_size))
     
-    # Инициализируем агентов
+    # Initializing agents
     agents = []
     for _ in range(10):
         agent = {
@@ -18,7 +18,7 @@ def run():
         }
         agents.append(agent)
     
-    # Функция для движения агента по карте
+    # Function for agent movement on the map
     def move_agent(agent, move_direction):
         new_x, new_y = agent['x'], agent['y']
     
@@ -33,16 +33,16 @@ def run():
     
         return new_x, new_y
     
-    # Функция для движения агента с учетом других агентов и посещенных точек
+    # Function for agent movement taking into account other agents and visited points
     def move_agent_with_other_agents_and_visited(agent, agents_positions, last_move_direction, visited_positions, s):
         neighbors = [(agent['x']-1, agent['y']), (agent['x']+1, agent['y']), (agent['x'], agent['y']-1), (agent['x'], agent['y']+1)]
     
-        # Составляем список доступных направлений для движения, исключая шаги в сторону других агентов на расстоянии s
+        # Make a list of available directions for movement, excluding steps towards other agents at a distance s
         moves = ['вверх', 'вниз', 'влево', 'вправо']
         possible_moves = [move for move in moves if move != last_move_direction]
     
         for x, y in neighbors:
-            if (x, y) in agents_positions:  # Проверяем позиции других агентов
+            if (x, y) in agents_positions:  # Checking the positions of other agents
                 dx = x - agent['x']
                 dy = y - agent['y']
                 if dx < 0 and 'вверх' in possible_moves:
@@ -54,7 +54,7 @@ def run():
                 if dy > 0 and 'вправо' in possible_moves:
                     possible_moves.remove('вправо')
     
-        # Исключаем направления, ведущие к уже посещенным точкам
+        # Exclude directions leading to already visited points
         for x, y in visited_positions:
             dx = x - agent['x']
             dy = y - agent['y']
@@ -77,19 +77,19 @@ def run():
             new_x, new_y = move_agent(agent, move_direction)
             return new_x, new_y, move_direction
     
-    # Имитация прохождения агентов по карте с учетом других агентов
-    agents_positions = set()  # для отслеживания позиций агентов
+    # Simulation of agents passing through the map taking into account other agents
+    agents_positions = set()  # to track agent positions
     for agent in agents:
-        visited_positions = set()  # для отслеживания посещенных позиций
+        visited_positions = set()  # to track visited positions
         last_move_direction = None
     
-        for _ in range(20):  # делаем 20 шагов для каждого агента
+        for _ in range(20):  
             new_x, new_y, last_move_direction = move_agent_with_other_agents_and_visited(agent, agents_positions, last_move_direction, visited_positions, 4)
     
-            if (new_x, new_y) not in visited_positions:  # проверяем, что позиция не была посещена
+            if (new_x, new_y) not in visited_positions:  # check that the position has not been visited
                 agent['x'], agent['y'] = new_x, new_y
-                agent['r'] -= 1  # уменьшаем ресурсы
-                agent['inf'] += 1  # увеличиваем количество информации
+                agent['r'] -= 1  # reduce resources
+                agent['inf'] += 1  # increasing the amount of information
     
                 visited_positions.add((new_x, new_y))
             else:
@@ -99,7 +99,7 @@ def run():
     
         agents_positions.add((agent['x'], agent['y']))
     
-    # Выводим информацию об агентах и сумму ресурсов и информации всех агентов
+    # Output information about agents and the sum of resources and information of all agents
     resources_sum = 0
     information_sum = 0
     for idx, agent in enumerate(agents):
